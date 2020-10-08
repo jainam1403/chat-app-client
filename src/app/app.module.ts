@@ -12,7 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { AuthenticationService } from './services/authentication.service';
 import { HttpClientModule } from '@angular/common/http';
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'https://peaceful-dawn-21555.herokuapp.com/', options: {} };
 @NgModule({
   declarations: [
     AppComponent,
