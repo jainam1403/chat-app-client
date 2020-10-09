@@ -1,4 +1,4 @@
 export class Room {
-  public username: string;
-  public room: string;
+  public username: number;
+  public room: number;
 }
