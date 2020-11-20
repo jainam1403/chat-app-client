@@ -10,6 +10,6 @@ export interface TokenResponse {
 }
 
 export interface TokenPayload {
-  phone_number: number;
+  phone_number: any;
   password: string;
 }

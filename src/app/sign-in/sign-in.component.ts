@@ -12,8 +12,8 @@ import { AuthenticationService } from '../services/authentication.service';
 export class SignInComponent {
 
   credentials: TokenPayload = {
-    phone_number: 0,
-    password: ""
+    phone_number: null,
+    password: null
   };
 
   constructor(private auth: AuthenticationService, private router: Router) { }

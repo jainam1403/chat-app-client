@@ -27,16 +27,22 @@
         </div>
         <div class="col-lg-4 ">
             <h4>Join Room</h4>
-            <div class="form-group ">
-                <label for="exampleInputEmail1 ">Room Code</label>
-                <input type="text " [(ngModel)]="join.room" class="form-control " id="join_room_code "
-                    placeholder="Enter Room Code " />
-            </div>
-            <button type="submit " id="join " (click)="joinRoom() " class="btn btn-primary">Submit</button>
+            <form name="joinRoomForm" #joinRommForm="ngForm">
+                <div class="form-group ">
+                    <label for="exampleInputEmail1 ">Room Code</label>
+                    <input type="number"  class="form-control" id="join_room_code"
+                    name="code" [(ngModel)]="join.room" placeholder="Enter Room Code " />
+                </div>
+                <button type="submit" [disabled]="joinRommForm.hasError()" id="join" (click)="joinRoom(joinRommForm) " class="btn btn-primary">Submit</button>
+            </form>
             <hr>
             <h4>Create Room</h4>
             <button type="submit " id="create " (click)="createRoom() " class="btn btn-primary">Submit</button>
             <div class="clearfix "></div>
+            <h4>Chat with known friends</h4>
+            <input type="tel" min="10" max="10" pattern="[0-10]{10}" name="phoneNumber" [(ngModel)]="targetPhoneNumber">
+            <button type="submit " id="create " (click)="searchPhoneNumber() " class="btn btn-primary">Search</button>
+            <p class="text-danger" *ngIf="isInValidNumber" style="font-size: 12;">Invalid number</p>
         </div>
     </div>
 </div>

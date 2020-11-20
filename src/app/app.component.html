@@ -1,18 +1,14 @@
-<div class="navbar navbar-default">
-    <div class="container">
-      <div id="navbar-main">
-        <ul class="nav navbar-nav">
-          <li><a routerLink="/">Home</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li *ngIf="!auth.isLoggedIn()"><a routerLink="/login">Sign in</a></li>
-          <li *ngIf="auth.isLoggedIn()">
-            <a routerLink="/chat">{{ auth.getUserDetails()?.name }}</a>
-          </li>
-          <li *ngIf="auth.isLoggedIn()"><a (click)="auth.logout()">Logout</a></li>
-        </ul>
-      </div>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active"> <a class="nav-link" routerLink="/">Home</a></li>
+      <li class="nav-item m-2" *ngIf="!auth.isLoggedIn()"><a routerLink="/login">Sign in</a></li>
+      <li class="nav-item m-2" *ngIf="auth.isLoggedIn()"> <a routerLink="/chat">{{ auth.getUserDetails()?.phone_number }}</a> </li>
+      <li class="nav-item m-2" *ngIf="auth.isLoggedIn()"><a (click)="auth.logout()">Logout</a></li>
+    </ul>
   </div>
-
-  <router-outlet></router-outlet>
+</nav>
+<router-outlet></router-outlet>
