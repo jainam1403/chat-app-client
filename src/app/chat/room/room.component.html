@@ -1,0 +1,22 @@
+<div class="d-flex w-100 flex-column card border-0" style="height: 400px;">
+    <div class="card h-75">
+        <div class="card-header p-0 m-0 p-1 font-weight-bold">Chat Members</div>
+        <div class="card-body p-0 m-0">
+            <ul class="list-group p-0 m-0 cursor-pointer" style="max-height: 232px; overflow-y: auto;">
+                <li class="list-group-item p-0 m-0 p-1" (click)="onSelect(participant)" *ngFor="let participant of store.state.participants">
+                    +91 {{participant.user_id}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card mt-2">
+        <div class="card-header p-0 m-0 p-1 font-weight-bold">Want to add more friends?</div>
+        <div class="card-body p-0 m-0">
+            <form class="m-2 d-flex justify-content-around" name="addForm" #addForm="ngForm" (submit)="add(addForm)">
+                <input type="text" (keypress)="keyPress($event)" class="form-control mr-2" minlength=10 maxlength=10 name="phone_number"
+                    placeholder="phone number" [(ngModel)]="phoneNumber" />
+                <button type="submit" class="btn btn-primary">Chat</button>
+            </form>
+        </div>
+    </div>
+</div>

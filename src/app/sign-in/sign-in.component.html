@@ -1,24 +1,18 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h1 class="form-signin-heading">Sign in</h1>
-            <p class="lead">
-                Not a member? Please <a routerLink="/register">register</a> instead.
-            </p>
-
-            <form (submit)="login()">
-                <div class="form-group">
-                    <label for="phone_number">Phone Number</label>
-                    <input type="phone_number" class="form-control" name="phone_number" placeholder="Enter phone number"
-                        [(ngModel)]="credentials.phone_number" />
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" placeholder="Password"
-                        [(ngModel)]="credentials.password" />
-                </div>
-                <button type="submit" class="btn btn-primary">Sign in!</button>
-            </form>
-        </div>
+<div class="login-page">
+    <div class="form">
+        <!-- <form class="register-form">
+        <input type="text" placeholder="name"/>
+        <input type="password" placeholder="password"/>
+        <input type="text" placeholder="email address"/>
+        <button>create</button>
+        <p class="message">Already registered? <a href="#">Sign In</a></p>
+      </form> -->
+      <p class="text-danger" *ngIf="isError">Invalid Credentials</p>
+        <form (submit)="login()" class="login-form" name="signInForm" #signInForm="ngForm">
+            <input type="text"  (keypress)="keyPress($event)" minlength=10 maxlength=10 name="phone_number" placeholder="phone number" [(ngModel)]="credentials.phone_number" />
+            <input type="password" placeholder="password" name="password" [(ngModel)]="credentials.password" />
+            <button type="submit">login</button>
+            <p class="message">Not registered? <a routerLink="register">Create an account</a></p>
+        </form>
     </div>
 </div>

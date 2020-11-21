@@ -19,6 +19,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "allowedCommonJsDependencies": [
+              "lodash"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -26,7 +29,11 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/jquery/dist/jquery.min.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -62,11 +69,13 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "chat-app-client:build"
+            "browserTarget": "chat-app-client:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "chat-app-client:build:production"
+              "browserTarget": "chat-app-client:build:production",
+              "proxyConfig": "src/proxy.conf.json"
             }
           }
         },
@@ -119,6 +128,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "chat-app-client"
 }

@@ -6,6 +6,7 @@ import { Room } from '../model/room.model';
 import { UserDetails } from '../model/user.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { UserService } from '../services/user.service';
+import { ChatStore } from './chat.store';
 
 @Component({
   selector: 'app-chat',
@@ -24,11 +25,11 @@ export class ChatComponent implements OnInit {
   targetPhoneNumber: number;
   isInValidNumber: boolean;
 
-  constructor(private socket: Socket, private auth: AuthenticationService,
+  constructor(private store: ChatStore, private socket: Socket, private auth: AuthenticationService,
     private userService: UserService) {
     this.socket.on('updatechat', (username: any, data: any) => {
       this.participant_id = data['participant_id'] ? data['participant_id'] : this.participant_id;
-      this.users.push(new Message(data['text'], new Date().getTime(), username, data['participant_id'], username));
+      // this.users.push(new Message(data['text'], new Date().getTime(), username, data['participant_id'], username));
     });
     this.socket.on('roomcreated', (data: Room) => {
       this.room_id = data['room'];
@@ -38,16 +39,17 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.socket.on('connect', () => { });
-    this.auth.profile().subscribe(
-      user => {
-        this.details = user;
-        this.currentUser = user.phone_number;
-      },
-      err => {
-        console.error(err);
-      }
-    );
+    this.store.init();
+    // this.socket.on('connect', () => { });
+    // this.auth.profile().subscribe(
+    //   user => {
+    //     this.details = user;
+    //     this.currentUser = user.phone_number;
+    //   },
+    //   err => {
+    //     console.error(err);
+    //   }
+    // );
   }
 
   searchPhoneNumber() {

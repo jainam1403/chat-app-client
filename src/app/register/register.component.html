@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center flex-column card m-2 border-shadow">
+<!-- <div class="d-flex justify-content-center flex-column card m-2 border-shadow">
     <div class="card-header">
         <h1>Register</h1>
         <p class="lead">
@@ -30,4 +30,15 @@
             <button [disabled]="userForm.invalid" type="submit" class="btn btn-primary">Register</button>
         </div>
     </form>
+</div> -->
+<div class="login-page">
+    <div class="form">
+        <form class="login-form" name="signUpForm" #signUpForm="ngForm" (submit)="register()">
+            <input type="text" (keypress)="keyPress($event)" minlength=10 maxlength=10 name="phone_number"
+                placeholder="phone number" [(ngModel)]="credentials.phone_number" />
+            <input type="password" placeholder="password" name="password" [(ngModel)]="credentials.password" />
+            <button type="submit">create</button>
+            <p class="message">Already registered? <a routerLink="login">Sign In</a></p>
+        </form>
+    </div>
 </div>

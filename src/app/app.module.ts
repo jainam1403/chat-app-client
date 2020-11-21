@@ -1,17 +1,20 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { SignInComponent } from './sign-in/sign-in.component';
 import { ChatComponent } from './chat/chat.component';
-import { RegisterComponent } from './register/register.component';
+import { ChatStore } from './chat/chat.store';
+import { MessagesComponent } from './chat/messages/messages.component';
+import { RoomComponent } from './chat/room/room.component';
+import { UserChatComponent } from './chat/user-chat/user-chat.component';
 import { HomeComponent } from './home/home.component';
-import { AuthenticationService } from './services/authentication.service';
-import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './register/register.component';
+import { SignInComponent } from './sign-in/sign-in.component';
+
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     SignInComponent,
     ChatComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    UserChatComponent,
+    RoomComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +36,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     HttpClientModule,
     SocketIoModule.forRoot(config)
   ],
+  providers: [ChatStore],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

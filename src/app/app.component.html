@@ -1,14 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
+    aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active"> <a class="nav-link" routerLink="/">Home</a></li>
-      <li class="nav-item m-2" *ngIf="!auth.isLoggedIn()"><a routerLink="/login">Sign in</a></li>
-      <li class="nav-item m-2" *ngIf="auth.isLoggedIn()"> <a routerLink="/chat">{{ auth.getUserDetails()?.phone_number }}</a> </li>
-      <li class="nav-item m-2" *ngIf="auth.isLoggedIn()"><a (click)="auth.logout()">Logout</a></li>
-    </ul>
+  <div class="collapse navbar-collapse d-flex w-100" id="navbarTogglerDemo01">
+    <span class="nav-link cursor-pointer" routerLink="/">ChatsApp</span>
+    <div class="navbar-nav d-flex justify-content-end mt-2 mt-lg-0 w-100">
+      <div class="d-flex justify-content-end">
+        <a *ngIf="auth.isLoggedIn()" class="cursor-pointer mr-2">{{ auth.getUserDetails()?.phone_number }}</a>
+        <a *ngIf="auth.isLoggedIn()" class="cursor-pointer" (click)="auth.logout()">Logout</a>
+      </div>
+    </div>
   </div>
 </nav>
-<router-outlet></router-outlet>
+<div class="mt-2">
+  <router-outlet></router-outlet>
+</div>
