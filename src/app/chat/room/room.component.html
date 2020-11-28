@@ -3,18 +3,45 @@
         <div class="card-header p-0 m-0 p-1 font-weight-bold">Chat Members</div>
         <div class="card-body p-0 m-0">
             <ul class="list-group p-0 m-0 cursor-pointer" style="max-height: 232px; overflow-y: auto;">
-                <li class="list-group-item p-0 m-0 p-1" (click)="onSelect(participant)" *ngFor="let participant of store.state.participants">
-                    +91 {{participant.user_id}}
+                <li class="list-group-item p-0 m-0 p-1" (click)="onSelect(room)" *ngFor="let room of ownRooms">
+                    +91 {{room.receiver}}
+                </li>
+                <li class="list-group-item p-0 m-0 p-1" (click)="onSelect(room)"
+                    *ngFor="let room of participantRooms">
+                    +91 {{room.created_by}}
                 </li>
             </ul>
         </div>
     </div>
     <div class="card mt-2">
-        <div class="card-header p-0 m-0 p-1 font-weight-bold">Want to add more friends?</div>
+        <div class="card-header p-0 m-0 p-1 font-weight-bold">Chat invitations</div>
+        <div class="card-body p-0 m-0">
+            <div class="m-2 d-flex justify-content-between flex-row card p-1" *ngFor="let invitation of invitations">
+                <div class="d-flex flex-column">
+                    <span class="text-muted fs-14">Phone Number</span>
+                    <span class="text-dark">{{invitation.receiver}}</span>
+                </div>
+                <div class='d-flex justify-content-end'>
+                    <span class="text-success fs-14 mt-2" *ngIf="invitation.status === 'accepted'">Accepted</span>
+                    <span class="text-danger fs-14 mt-2" *ngIf="invitation.status === 'declined'">Declined</span>
+                    <span class="text-secondary fs-14 m-1 mt-2" *ngIf="invitation.status === 'pending' && 
+                    (invitation.created_by === store.currentUser.phone_number)">Pending</span>
+                    <button type="button" class="btn btn-success m-1"
+                        *ngIf="invitation.status === 'pending' && invitation.created_by !== store.currentUser.phone_number"
+                        (click)="onInvitation(true, invitation)">Accept</button>
+                    <button type="button" class="btn btn-danger m-1"
+                        *ngIf="invitation.status === 'pending' && invitation.created_by !== store.currentUser.phone_number"
+                        (click)="onInvitation(false, invitation)">Decline</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mt-2">
+        <div class="card-header p-0 m-0 p-1 font-weight-bold">Want to invite friends?</div>
         <div class="card-body p-0 m-0">
             <form class="m-2 d-flex justify-content-around" name="addForm" #addForm="ngForm" (submit)="add(addForm)">
-                <input type="text" (keypress)="keyPress($event)" class="form-control mr-2" minlength=10 maxlength=10 name="phone_number"
-                    placeholder="phone number" [(ngModel)]="phoneNumber" />
+                <input type="text" (keypress)="keyPress($event)" class="form-control mr-2" minlength=10 maxlength=10
+                    name="phone_number" placeholder="phone number" [(ngModel)]="phoneNumber" />
                 <button type="submit" class="btn btn-primary">Chat</button>
             </form>
         </div>

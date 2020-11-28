@@ -5,7 +5,6 @@ import { ChatStore } from '../chat.store';
 @Component({
   selector: 'app-user-chat',
   templateUrl: './user-chat.component.html',
-  styleUrls: ['./user-chat.component.css']
 })
 export class UserChatComponent implements OnInit {
 

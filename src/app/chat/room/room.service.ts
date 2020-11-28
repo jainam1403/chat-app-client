@@ -11,7 +11,7 @@ export class RoomService {
 
   constructor(private http: HttpClient, private router: Router) { }
 
-  findByCreatedBy(createdBy: number): Observable<any[]> {
+  findByUserId(createdBy: number): Observable<any[]> {
     return this.http.get(`/api/room/` + createdBy, { observe: 'response' }).pipe(map(res => <any[]>res.body));
   }
 }

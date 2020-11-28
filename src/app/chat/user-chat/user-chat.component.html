@@ -1,11 +1,15 @@
 <div class="d-flex w-100 flex-column card">
   <div class="d-flex card-header font-weight-bold p-0 m-0 p-1">
-    <span *ngIf="store.state.currentParticipant">Direct Chat with +91 {{store.state.currentParticipant?.user_id}}</span>
-    <span *ngIf="!store.state.currentParticipant">Choose your friend to chat</span>
+    <span *ngIf="store.state.currentRoom">Direct Chat with +91 {{
+      (store.state.currentRoom.created_by === store.currentUser.phone_number)   
+      ? store.state.currentRoom.receiver : store.state.currentRoom.created_by 
+    }}</span>
+    <span *ngIf="!store.state.currentRoom">Choose your friend to chat</span>
   </div>
   <div class="card-body p-0 p-1 d-flex flex-column" style="height: 300px;">
     <div style="max-height: 295px;overflow-y: auto;">
-      <app-messages [message]="message" [currentUserId]="store.currentUser.phone_number" *ngFor="let message of store.state.messages"></app-messages>
+      <app-messages [message]="message" [currentUserId]="store.currentUser.phone_number"
+        *ngFor="let message of store.state.messages"></app-messages>
     </div>
   </div>
   <div class="card-footer">

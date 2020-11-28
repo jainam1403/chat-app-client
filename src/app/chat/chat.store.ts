@@ -3,9 +3,10 @@ import * as moment from 'moment';
 import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../model/message.model';
-import { Participant } from '../model/participants.model';
+import { Room } from '../model/room.model';
 import { UserDetails } from '../model/user.model';
 import { AuthenticationService } from '../services/authentication.service';
+import { ToastrService } from '../services/toastr.service';
 import { UserService } from '../services/user.service';
 import { ChatState } from './chat.state';
 import { MessageService } from './messages/messages.service';
@@ -20,15 +21,53 @@ export class ChatStore {
     constructor(private roomService: RoomService, private socket: Socket,
         private userService: UserService,
         private messageService: MessageService,
+        private toastService: ToastrService,
         private auth: AuthenticationService) {
         this._state$ = new BehaviorSubject(new ChatState());
         this.state$ = this._state$.asObservable();
-        this.socket.on('connect', () => { });
-        this.socket.on('acknowledgeUser', data => this.getParticipants());
+        this.socket.on('error', (data) => {
+            this.toastService.show(data, {
+                classname: 'bg-danger text-light',
+                delay: 2000,
+                autohide: true
+            });
+        });
+        this.socket.on('alreadyExist', (data) => {
+            this.toastService.show(data, {
+                classname: 'bg-danger text-light',
+                delay: 2000,
+                autohide: true
+            });
+        });
+        this.socket.on('invitedSuccess', (data) => this.setLatestRoom(data));
+        this.socket.on('roomDeclined', (data) => this.setLatestRoom(data));
+        this.socket.on('roomJoined', (data) => this.setLatestRoom(data));
+        this.socket.on('receivechat', (data: Message) => {
+            console.log('datanew ', data);
+            this.state.messages.push(data);
+        });
+    }
+
+    private setLatestRoom(data: any) {
+        console.log('data ', data, this.state.stableRooms);
+        if (this.state.stableRooms) {
+            const index = this.state.stableRooms.findIndex(s => s.id === data.id);
+            if (index >= 0) {
+                this.state.stableRooms[index] = data;
+            } else {
+                this.state.stableRooms.push(data);
+            }
+            this.state.setRooms$(this.state.stableRooms);
+        }
     }
 
     init() {
-        this.auth.profile().subscribe(user => this.currentUser = user);
+        this.auth.profile().subscribe(user => {
+            console.log('data connect to socket ');
+            this.socket.emit('connecttoUser', { user_id: user.phone_number });
+            this.currentUser = user;
+            this.getCombineData();
+        });
     }
 
     get state(): ChatState {
@@ -40,69 +79,42 @@ export class ChatStore {
     }
 
     onMessage(msg: string) {
-        const message = new Message(msg, moment(new Date()), this.state.currentParticipant.room_id, this.state.currentParticipant.id,
-            this.currentUser.phone_number, this.state.currentParticipant.user_id);
-        this.socket.emit('sendchat', { message: message });
-        this.socket.on('receivechat', (username: any, data: any) => {
-            console.log('data ', data.message, username);
-            this.state.messages.push(data.message);
-        });
+        const receiver = this.state.currentRoom.receiver === this.currentUser.phone_number ? this.state.currentRoom.created_by : this.state.currentRoom.receiver;
+        const message = new Message(msg, moment(new Date()), this.state.currentRoom.id, this.currentUser.phone_number, receiver, null);
+        this.state.messages.push(message);
+        this.socket.emit('sendchat', message);
+    }
+
+    onActionInvitation(isAccept: boolean, invitation: Room) {
+        console.log('on Accept ', isAccept);
+        this.socket.emit(isAccept ? 'acceptUser' : 'declineUser', { room_id: invitation.id });
     }
 
     addNumber(phoneNumber: number) {
-        if (this.currentUser) {
-            this.userService.searchByPhoneNumber(this.currentUser.phone_number, phoneNumber)
-                .subscribe(res => {
-                    if (res) {
-                        // valid phone number
-                        this.socket.emit('directChat', {
-                            created_by: this.currentUser.phone_number,
-                            username: phoneNumber
-                        });
-                    } else {
-                        // throw error
-                        // toast error invalid number or number is not registered
-                    }
-                });
-        } else {
-            this.auth.profile().subscribe(user => {
-                this.currentUser = user;
-                this.userService.searchByPhoneNumber(this.currentUser.phone_number, phoneNumber)
-                    .subscribe(res => {
-                        if (res) {
-                            // valid phone number
-                            this.socket.emit('directChat', {
-                                created_by: this.currentUser.phone_number,
-                                username: phoneNumber
-                            });
-                        } else {
-                            // throw error
-                            // toast error invalid number or number is not registered
-                        }
+        this.userService.searchByPhoneNumber(this.currentUser.phone_number, phoneNumber)
+            .subscribe(res => {
+                if (res) {
+                    // valid phone number
+                    this.socket.emit('inviteUser', {
+                        created_by: this.currentUser.phone_number,
+                        receiver: phoneNumber
                     });
+                } else {
+                    // throw error
+                    // toast error invalid number or number is not registered
+                }
             });
-        }
     }
 
-    getParticipants() {
-        if (this.currentUser) {
-            this.roomService.findByCreatedBy(this.currentUser.phone_number).subscribe(res => {
-                this.state.participants = res;
+    getCombineData() {
+        // get rooms, get invitations
+        this.roomService.findByUserId(this.currentUser.phone_number)
+            .subscribe(res => {
+                this.state.setRooms$(res);
             });
-        } else {
-            this.auth.profile().subscribe(user => {
-                this.roomService.findByCreatedBy(this.currentUser.phone_number).subscribe(res => {
-                    this.state.participants = res;
-                });
-            });
-        }
     }
 
-    setCurrentParticipants(participant: Participant) {
-        this.state.currentParticipant = participant;
-        this.messageService.findByParticipantId(participant.id).subscribe(res => {
-            this.state.messages = res;
-        });
-        this.socket.emit('joinroom', { room_id: participant.room_id });
+    setCurrentRoom(room: Room) {
+        this.state.currentRoom = room;
     }
 }

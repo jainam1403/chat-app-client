@@ -1,9 +1,8 @@
 export class Room {
-  public username: number;
-  public room: any;
-
-  constructor( username?: number, room?: any) {
-    this.username = username;
-    this.room = room;
-  }
+  created_by: number;
+  receiver: number;
+  created_on: Date;
+  id: number;
+  is_invited: boolean;
+  status: string;
 }
