@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  socketUrl: 'http://localhost:3000/',
-  apiUrl: 'http://localhost:3000/'
+  socketUrl: 'https://peaceful-dawn-21555.herokuapp.com/',
+  apiUrl: 'https://peaceful-dawn-21555.herokuapp.com/'
 };
