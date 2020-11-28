@@ -18,7 +18,7 @@ import { ToastrService } from './services/toastr.service';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ToastComponent } from './toast/toast.component';
 
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const config: SocketIoConfig = { url: 'https://peaceful-dawn-21555.herokuapp.com/', options: {} };
 @NgModule({
   declarations: [	
     AppComponent,
