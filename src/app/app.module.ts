@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ChatComponent } from './chat/chat.component';
@@ -18,7 +19,7 @@ import { ToastrService } from './services/toastr.service';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { ToastComponent } from './toast/toast.component';
 
-const config: SocketIoConfig = { url: 'https://peaceful-dawn-21555.herokuapp.com/', options: {} };
+const config: SocketIoConfig = { url: environment.socketUrl, options: {} };
 @NgModule({
   declarations: [	
     AppComponent,

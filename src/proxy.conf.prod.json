@@ -1,8 +1,9 @@
 {
     "/api": {
-      "target": "https://peaceful-dawn-21555.herokuapp.com",
+      "target": "https://peaceful-dawn-21555.herokuapp.com/api",
       "secure" : false,
-      "changeOrigin": true
+      "changeOrigin": true,
+      "pathRewrite": {"^/api" : ""}
     }
   }
   

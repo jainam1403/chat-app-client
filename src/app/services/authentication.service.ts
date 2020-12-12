@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { TokenPayload, TokenResponse, UserDetails } from '../model/user.model';
 
 @Injectable({
@@ -33,9 +34,9 @@ export class AuthenticationService {
     let base$;
 
     if (method === "post") {
-      base$ = this.http.post(`/api/${type}`, user);
+      base$ = this.http.post(environment.apiUrl + `/api/${type}`, user);
     } else {
-      base$ = this.http.get(`/api/${type}`, {
+      base$ = this.http.get(environment.apiUrl + `/api/${type}`, {
         headers: { Authorization: `Bearer ${this.getToken()}` }
       });
     }
