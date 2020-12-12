@@ -4,7 +4,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse d-flex w-100" id="navbarTogglerDemo01">
-    <span class="nav-link cursor-pointer" routerLink="/">ChatsApp</span>
+    <span class="nav-link cursor-pointer p-0" routerLink="/">ChatsApp</span>
     <div class="navbar-nav d-flex justify-content-end mt-2 mt-lg-0 w-100">
       <div class="d-flex justify-content-end">
         <a *ngIf="auth.isLoggedIn()" class="cursor-pointer mr-2">{{ auth.getUserDetails()?.phone_number }}</a>

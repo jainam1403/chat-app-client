@@ -1,7 +1,7 @@
 <div class="row p-0 m-0">
-  <div class="d-flex col-6 p-0 m-0" *ngIf="message.sender === currentUserId"></div>
-  <div class="d-flex flex-column w-d-flex col-6 p-0 m-0 w-100">
-    <span class="m-1 border bg-white text-success border-muted w-100 p-2">
+  <div class="d-flex col p-0 m-0" *ngIf="message.sender === currentUserId"></div>
+  <div class="d-flex flex-column w-d-flex col-6 p-0 m-0 mb-2">
+    <span class="border bg-success text-white border-muted p-2" style="border-radius: 15px;">
       {{message.message }}
     </span>
     <span style="text-align: right;font-size: 12px;"

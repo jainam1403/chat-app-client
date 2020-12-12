@@ -1,40 +1,7 @@
-<!-- <div class="d-flex justify-content-center flex-column card m-2 border-shadow">
-    <div class="card-header">
-        <h1>Register</h1>
-        <p class="lead">
-            Already a member? Please <a routerLink="/login">log in</a> instead.
-        </p>
-    </div>
-    <form name="userForm" #userForm="ngForm" (submit)="register()">
-        <div class="card-body">
-            <div class="form-group">
-                <input type="number" class="form-control" name="phoneNumber" placeholder=" 10 digits phone number"
-                    [(ngModel)]="credentials.phone_number" maxlength="10" required
-                    #phoneNumber="ngModel" />
-                <p class="text-danger" style="font-size: 12px;"
-                    *ngIf="(phoneNumber.dirty || phoneNumber.touched) && phoneNumber.errors &&
-                    phoneNumber.errors.required">
-                    Phone number is required
-                </p>
-            </div>
-            <div class="form-group">
-                <input type="password" required #password="ngModel" class="form-control" name="password"
-                    placeholder="Enter your Password" [(ngModel)]="credentials.password" />
-                <p class="text-danger" style="font-size: 12px;"
-                    *ngIf="(password.dirty || password.touched) && password.errors && password.errors.required">
-                    Password is required
-                </p>
-            </div>
-        </div>
-        <div class="card-footer">
-            <button [disabled]="userForm.invalid" type="submit" class="btn btn-primary">Register</button>
-        </div>
-    </form>
-</div> -->
 <div class="login-page">
     <div class="form">
         <form class="login-form" name="signUpForm" #signUpForm="ngForm" (submit)="register()">
-            <input type="text" (keypress)="keyPress($event)" minlength=10 maxlength=10 name="phone_number"
+            <input type="tel" (keypress)="keyPress($event)" max="10" name="phone_number"
                 placeholder="phone number" [(ngModel)]="credentials.phone_number" />
             <input type="password" placeholder="password" name="password" [(ngModel)]="credentials.password" />
             <button type="submit">create</button>

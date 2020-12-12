@@ -102,6 +102,11 @@ export class ChatStore {
                 } else {
                     // throw error
                     // toast error invalid number or number is not registered
+                    this.toastService.show('Invalid phone number', {
+                        classname: 'bg-danger text-light',
+                        delay: 2000,
+                        autohide: true
+                    });
                 }
             });
     }
@@ -116,5 +121,8 @@ export class ChatStore {
 
     setCurrentRoom(room: Room) {
         this.state.currentRoom = room;
+        this.messageService.findByParticipantId(room.id).subscribe(res => {
+            this.state.messages = [...this.state.messages, ...res];
+        });
     }
 }

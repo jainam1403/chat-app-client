@@ -29,7 +29,7 @@ export class RegisterComponent {
 
   keyPress(event: any) {
     const pattern = /[0-9\+\ ]/;
-
+    this.credentials.phone_number = this.credentials.phone_number.replace(/\D/g,'');
     let inputChar = String.fromCharCode(event.charCode);
     if (event.keyCode != 8 && !pattern.test(inputChar)) {
       event.preventDefault();

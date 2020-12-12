@@ -7,11 +7,12 @@
         <button>create</button>
         <p class="message">Already registered? <a href="#">Sign In</a></p>
       </form> -->
-      <p class="text-danger" *ngIf="isError">Invalid Credentials</p>
-        <form (submit)="login()" class="login-form" name="signInForm" #signInForm="ngForm">
-            <input type="text"  (keypress)="keyPress($event)" minlength=10 maxlength=10 name="phone_number" placeholder="phone number" [(ngModel)]="credentials.phone_number" />
+        <p class="text-danger" *ngIf="isError">Invalid Credentials</p>
+        <form class="login-form" name="signInForm" #signInForm="ngForm">
+            <input type="tel" (keypress)="keyPress($event)" max=10 name="phone_number"
+                placeholder="phone number" [(ngModel)]="credentials.phone_number" />
             <input type="password" placeholder="password" name="password" [(ngModel)]="credentials.password" />
-            <button type="submit">login</button>
+            <button type="submit" (click)="login()" [disabled]="signInForm.control.get('phone_number') && signInForm.control.get('phone_number').invalid">login</button>
             <p class="message">Not registered? <a routerLink="register">Create an account</a></p>
         </form>
     </div>
