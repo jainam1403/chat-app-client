@@ -13,6 +13,6 @@ export class RoomService {
   constructor(private http: HttpClient, private router: Router) { }
 
   findByUserId(createdBy: number): Observable<any[]> {
-    return this.http.get(environment.apiUrl + `api/room/` + createdBy, { observe: 'response' }).pipe(map(res => <any[]>res.body));
+    return this.http.get(environment.apiUrl + `/api/room/` + createdBy, { observe: 'response' }).pipe(map(res => <any[]>res.body));
   }
 }
