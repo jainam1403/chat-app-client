@@ -75,7 +75,7 @@
           "configurations": {
             "production": {
               "browserTarget": "chat-app-client:build:production",
-              "proxyConfig": "src/proxy.conf.json"
+              "proxyConfig": "src/proxy.conf.prod.json"
             }
           }
         },
