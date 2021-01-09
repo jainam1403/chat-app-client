@@ -14,6 +14,7 @@ import { MessagesComponent } from './chat/messages/messages.component';
 import { RoomComponent } from './chat/room/room.component';
 import { UserChatComponent } from './chat/user-chat/user-chat.component';
 import { HomeComponent } from './home/home.component';
+import { LinkifyPipe } from './pipe/LinkifyPipe.pipe';
 import { RegisterComponent } from './register/register.component';
 import { ToastrService } from './services/toastr.service';
 import { SignInComponent } from './sign-in/sign-in.component';
@@ -21,7 +22,7 @@ import { ToastComponent } from './toast/toast.component';
 
 const config: SocketIoConfig = { url: environment.socketUrl, options: {} };
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     SignInComponent,
     ChatComponent,
@@ -30,8 +31,9 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {} };
     UserChatComponent,
     RoomComponent,
     MessagesComponent,
-      ToastComponent
-   ],
+    ToastComponent,
+    LinkifyPipe
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -42,7 +44,7 @@ const config: SocketIoConfig = { url: environment.socketUrl, options: {} };
     SocketIoModule.forRoot(config),
     NgbModule
   ],
-  providers: [ChatStore, ToastrService],
+  providers: [ChatStore, ToastrService, LinkifyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

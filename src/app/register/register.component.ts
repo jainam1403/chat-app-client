@@ -13,15 +13,18 @@ export class RegisterComponent {
     phone_number: null,
     password: null
   };
+  isError: boolean;
 
   constructor(private auth: AuthenticationService, private router: Router) { }
 
   register() {
     this.auth.register(this.credentials).subscribe(
       () => {
-        this.router.navigateByUrl("/chat");
+        this.isError = false;
+        this.router.navigateByUrl("/login");
       },
       err => {
+        this.isError = true;
         console.error(err);
       }
     );

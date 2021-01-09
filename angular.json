@@ -130,5 +130,8 @@
       }
     }
   },
-  "defaultProject": "chat-app-client"
+  "defaultProject": "chat-app-client",
+  "cli": {
+    "analytics": false
+  }
 }

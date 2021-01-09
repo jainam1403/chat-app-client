@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Socket } from 'ngx-socket-io';
-import { Participant } from 'src/app/model/participants.model';
 import { Room } from 'src/app/model/room.model';
 import { ToastrService } from 'src/app/services/toastr.service';
 import { ChatStore } from '../chat.store';
@@ -20,7 +18,6 @@ export class RoomComponent implements OnInit {
   constructor(public store: ChatStore, private toastService: ToastrService) {
     this.store.state.getRooms().subscribe(res => {
       if (res) {
-        console.log('res ', res);
         const rooms = res.filter(r => r.is_invited !== true && r.status !== 'declined');
         this.ownRooms = rooms.filter(r => r.created_by === this.store.currentUser.phone_number);
         this.participantRooms = rooms.filter(r => r.created_by !== this.store.currentUser.phone_number);

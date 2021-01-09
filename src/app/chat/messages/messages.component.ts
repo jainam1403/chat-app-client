@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Message } from 'src/app/model/message.model';
+import { LinkifyPipe } from 'src/app/pipe/LinkifyPipe.pipe';
 
 @Component({
   selector: 'app-messages',
@@ -12,9 +13,10 @@ export class MessagesComponent implements OnInit {
 
   @Input() currentUserId: number;
 
-  constructor() { }
+  constructor(private linkifyPipe: LinkifyPipe) { }
 
   ngOnInit() {
+    this.message.message = this.linkifyPipe.transform(this.message.message);
   }
 
 }

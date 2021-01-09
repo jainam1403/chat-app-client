@@ -1,8 +1,7 @@
 <div class="row p-0 m-0">
   <div class="d-flex col p-0 m-0" *ngIf="message.sender === currentUserId"></div>
   <div class="d-flex flex-column w-d-flex col-6 p-0 m-0 mb-2">
-    <span class="border bg-success text-white border-muted p-2" style="border-radius: 15px;">
-      {{message.message }}
+    <span class="border border-muted p-2" style="border-radius: 15px;" [innerHTML]="message.message">
     </span>
     <span style="text-align: right;font-size: 12px;"
       class="w-100 float-right fs-12 text-muted ">{{message.message_on | date: 'short'}}</span>

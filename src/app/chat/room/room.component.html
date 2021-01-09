@@ -19,7 +19,7 @@
             <div class="m-2 d-flex justify-content-between flex-row card p-1" *ngFor="let invitation of invitations">
                 <div class="d-flex flex-column">
                     <span class="text-muted fs-14">Phone Number</span>
-                    <span class="text-dark">{{invitation.receiver}}</span>
+                    <span class="text-dark">{{invitation.receiver === store.currentUser.phone_number ? invitation.created_by : invitation.receiver}}</span>
                 </div>
                 <div class='d-flex justify-content-end'>
                     <span class="text-success fs-14 mt-2" *ngIf="invitation.status === 'accepted'">Accepted</span>

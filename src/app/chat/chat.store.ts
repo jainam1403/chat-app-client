@@ -49,7 +49,6 @@ export class ChatStore {
     }
 
     private setLatestRoom(data: any) {
-        console.log('data ', data, this.state.stableRooms);
         if (this.state.stableRooms) {
             const index = this.state.stableRooms.findIndex(s => s.id === data.id);
             if (index >= 0) {
@@ -86,7 +85,6 @@ export class ChatStore {
     }
 
     onActionInvitation(isAccept: boolean, invitation: Room) {
-        console.log('on Accept ', isAccept);
         this.socket.emit(isAccept ? 'acceptUser' : 'declineUser', { room_id: invitation.id });
     }
 
@@ -122,7 +120,7 @@ export class ChatStore {
     setCurrentRoom(room: Room) {
         this.state.currentRoom = room;
         this.messageService.findByParticipantId(room.id).subscribe(res => {
-            this.state.messages = [...this.state.messages, ...res];
+            this.state.messages = [...res];
         });
     }
 }

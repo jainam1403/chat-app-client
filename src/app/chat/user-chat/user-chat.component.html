@@ -14,8 +14,9 @@
   </div>
   <div class="card-footer">
     <form name="messageForm" class="d-flex flex-row w-100" #messageForm="ngForm" (submit)="onMessage(messageForm)">
-      <input type="text" class="form-control" placeholder="Enter your message" name="message" [(ngModel)]="message">
-      <button class="btn btn-primary ml-2" type="submit">Send</button>
+      <input type="text" required class="form-control" placeholder="Enter your message" name="message" 
+      [(ngModel)]="message" [disabled]="(!store.state.currentRoom) || (store && store.state && store.state.currentRoom && (!store.state.currentRoom.created_by ||  !store.state.currentRoom.receiver))">
+      <button class="btn btn-primary ml-2" type="submit" [disabled]="messageForm.invalid">Send</button>
     </form>
   </div>
 </div>
